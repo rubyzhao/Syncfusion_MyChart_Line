@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+	<head>
+    <meta charset="utf-8">
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            }
+
+            .chart--container {
+            min-height: 150px;
+            width: 100%;
+            height: 100%;
+            }
+
+            .zc-ref {
+            display: none;
+            }
+    </style>
+    <title>Sine wave Chart</title>
+    //<script src="./Lib2_8_7/zingchart.min.js"></script>
+    <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+</head>
+	<body>
+        <div id='myChart' class="chart--container"></div>
+        <script>
+            let chartDataX = [];
+            let chartDataY = [];
+            const loop = 2e4;
+            // Canvas
+            // 2e5: long wait
+            // SVG
+            // 2e5: long wait
+            for (let i = 0; i < loop; i++) {
+                let x = (800 * Math.PI * i) / loop;
+                let y = 100 * Math.sin(i);
+                chartDataX.push(x);
+                chartDataY.push(y);
+            }
+            // console.log(chartDataX);
+            console.log(chartDataY);
+            var myConfig = {
+                type: 'line',
+                'scale-x': {
+                    values: chartDataX,
+                    guide: {
+                        'line-style': 'solid',
+                        'line-width': 1,
+                        'line-color': 'gray',
+                        alpha: 0.9,
+                    },
+                    'minor-ticks': 10,
+                    'minor-tick': {
+                        'line-color': 'red',
+                        'line-width': 1,
+                        'line-style': 'solid',
+                        size: 10,
+                        placement: 'cross',
+                    },
+                    decimals: 2,
+                    maxItems: 15,
+                    // maxTicks: 10,
+                    maxValue: 2550,
+                    minValue: 0,
+                },
+                'scale-y': {
+                    guide: {
+                        'line-style': 'solid',
+                        'line-width': 1,
+                        'line-color': 'gray',
+                        alpha: 0.5,
+                    },
+                    'minor-ticks': 10,
+                    // maxItems: 20,
+                    // maxTicks: 10,
+                    step: 20,
+                    maxValue: 120,
+                    minValue: -120,
+                },
+                series: [
+                    {
+                        values: chartDataY,
+                    },
+                ],
+            };
+
+            zingchart.render({
+                id: 'myChart',
+                data: myConfig,
+                height: 200, //'30%',
+                width: 1000, //'80%',
+                //output: 'canvas', //'canvas','svg', 'vml','auto'
+            });
+        
+        </script>
+	</body>
+</html>
